@@ -1,5 +1,7 @@
 import os
+
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 creations = [
     {"folder_name": "yyyy-mm-ddhhMM", "folder_path": "fakemorefolders"},
@@ -62,8 +64,10 @@ def main() -> None:
 
 
 def _months_to_days(months_str):
-    num = int(months_str.split()[0])
-    return num * 30
+    num_months = int(months_str.split()[0])
+    today = datetime.today()
+    past_date = today - relativedelta(months=num_months)
+    return (today - past_date).days
 
 
 if __name__ == "__main__":

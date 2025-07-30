@@ -1,7 +1,9 @@
 import os
 import calendar
 import uuid
+
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 creations = [
     {"file_name": "helloWorld_yyyymmdd.csv", "folder_path": "fakecsvfolders"},
@@ -69,9 +71,11 @@ def main() -> None:
             current_date += timedelta(days=1)
 
 
-def _months_to_days(months_str: str) -> int:
-    num = int(months_str.split()[0])
-    return num * 30
+def _months_to_days(months_str):
+    num_months = int(months_str.split()[0])
+    today = datetime.today()
+    past_date = today - relativedelta(months=num_months)
+    return (today - past_date).days
 
 
 if __name__ == "__main__":
